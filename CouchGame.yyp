@@ -255,6 +255,14 @@
             }
         },
         {
+            "Key": "cbf5c61e-e516-45ec-9b85-ad5229107f99",
+            "Value": {
+                "id": "2620601c-400a-4963-a18b-5f9a7cc47caa",
+                "resourcePath": "sprites\\sAmmo\\sAmmo.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "cc98d028-7bdd-4680-85f3-c87a7baa481e",
             "Value": {
                 "id": "2d94519e-ceaa-4c18-bb08-08cb600ec089",
@@ -308,6 +316,14 @@
                 "id": "476daf4c-d267-4c2b-934f-ba1cd0af062d",
                 "resourcePath": "views\\ee96450b-ff9a-423f-b463-1b8f0dbde84e.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "ef34c61d-f6d4-4e15-b770-319bb78716a7",
+            "Value": {
+                "id": "1eca5ed1-b5e5-4f47-b97e-818b128189bc",
+                "resourcePath": "objects\\oJetPackBrawlAmmo\\oJetPackBrawlAmmo.yy",
+                "resourceType": "GMObject"
             }
         },
         {

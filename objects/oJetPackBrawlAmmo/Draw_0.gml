@@ -1,0 +1,1 @@
+effect_create_below(ef_smokeup, bbox_left + random(sprite_width), bbox_bottom + random(sprite_height), choose(0.01, 0.1), colour);

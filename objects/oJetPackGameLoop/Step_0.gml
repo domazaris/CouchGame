@@ -1,8 +1,8 @@
 
-var x_min = 0;
-var x_max = room_width;
-var y_min = 0;
-var y_max = room_height;
+var x_min = -1;
+var x_max = -1;
+var y_min = -1;
+var y_max = -1;
 
 // Iterate each controller and add active players
 var connected_controllers = gamepad_get_device_count();
@@ -26,6 +26,7 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 			// Deactivate unhealthy players
 			if( current_player.player_health == 0 )
 			{
+				gamepad_set_vibration(c_id, 0, 0);
 				instance_deactivate_object(current_player);
 			}
 			
@@ -48,28 +49,47 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 			{
 				var p_x = current_player.x;
 				var p_y = current_player.y;
-				if( p_x < x_max )
-				{
-					x_max = p_x + current_player.sprite_width;
-				}
-				if( p_x > x_min )
-				{
-					x_min = p_x;
-				}
-				if( p_y < y_max )
-				{
-					y_max = p_y + current_player.sprite_height;
-				}
-				if( p_y > y_min )
-				{
-					y_min = p_y;
-				}
+				if( x_min < 0 || x_min < p_x ) x_max = p_x;
+				if( x_max < 0 || x_max + current_player.sprite_width > p_x ) x_min = p_x + current_player.sprite_width;
+				if( y_min < 0 || y_min < p_y ) y_max = p_y;
+				if( y_max < 0 || y_max + current_player.sprite_height > p_y ) y_min = p_y + current_player.sprite_height;
 			}
 		}
 	}
 }
 
+if( x_min < 0 ) x_min = 0;
+if( x_max < 0 ) x_max = room_width;
+if( y_min < 0 ) y_min = 0;
+if( y_max < 0 ) y_max = room_height;
+
+show_debug_message(string(x_min) + " " + string(x_max));
+if( x_max - x_min < min_x_cam )
+{
+	var difference = (min_x_cam - (x_max - x_min)) / 2;
+	x_min -= difference;
+	x_max += difference;
+}
+else
+{
+	x_min -= 128;
+	x_max += 128;
+}
+
+if( y_max - y_min < min_y_cam )
+{
+	var difference = (min_y_cam - (y_max - y_min)) / 2;
+	y_min -= difference;
+	y_max += difference;
+}
+else
+{
+	y_min -= 72;
+	y_max += 72;
+}
+
 // Set camera
-camera_set_view_pos(view_camera[0], x_min - 256, y_min - 256);
-camera_set_view_size(view_camera[0], x_max-x_min + 512,  y_max-y_min + 512);
-camera_set_view_speed(view_camera[0], 4, 4);
+//camera_set_view_pos(view_camera[0], x_min, y_min);
+//show_debug_message(string(x_max - x_min));
+//camera_set_view_size(view_camera[0], x_max-x_min,  y_max-y_min);
+//camera_set_view_speed(view_camera[0], -1, -1);
