@@ -64,6 +64,11 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 				}
 			}
 		}
+		var b_pressed = gamepad_button_check_pressed(c_id, gp_face2);
+		if( b_pressed )
+		{
+			room_goto(rMainMenu);
+		}
 		break;
 	}
 }

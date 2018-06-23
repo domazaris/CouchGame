@@ -1,38 +1,28 @@
 {
-    "id": "df879e8d-a2be-4bac-b7f2-e57ef62c289b",
+    "id": "1a8db598-46aa-4124-ba2b-00bc1cb1bd8e",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "loginScreen",
+    "name": "oJetPackGameLoop",
     "eventList": [
         {
-            "id": "b23988a4-bade-4f15-a886-aa83de1c77a9",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
-            "eventtype": 3,
-            "m_owner": "df879e8d-a2be-4bac-b7f2-e57ef62c289b"
-        },
-        {
-            "id": "b730499e-58c5-40e6-a95e-d6221b2ff7c6",
+            "id": "3f45f17e-6137-48cd-b74f-ec8ce7dde195",
             "modelName": "GMEvent",
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
             "enumb": 0,
             "eventtype": 0,
-            "m_owner": "df879e8d-a2be-4bac-b7f2-e57ef62c289b"
+            "m_owner": "1a8db598-46aa-4124-ba2b-00bc1cb1bd8e"
         },
         {
-            "id": "f10709be-13ca-49d5-9c06-7e6a954525dc",
+            "id": "effa9779-5797-4dda-9749-781725c87d07",
             "modelName": "GMEvent",
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
             "enumb": 0,
-            "eventtype": 8,
-            "m_owner": "df879e8d-a2be-4bac-b7f2-e57ef62c289b"
+            "eventtype": 3,
+            "m_owner": "1a8db598-46aa-4124-ba2b-00bc1cb1bd8e"
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
