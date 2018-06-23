@@ -1,8 +1,8 @@
 
-var min_x = 0;
-var max_x = room_width;
-var min_y = 0;
-var max_y = room_height;
+var x_min = 0;
+var x_max = room_width;
+var y_min = 0;
+var y_max = room_height;
 
 // Iterate each controller and add active players
 var connected_controllers = gamepad_get_device_count();
@@ -48,31 +48,28 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 			{
 				var p_x = current_player.x;
 				var p_y = current_player.y;
-				if( p_x < max_x )
+				if( p_x < x_max )
 				{
-					max_x = p_x + current_player.sprite_width;
+					x_max = p_x + current_player.sprite_width;
 				}
-				if( p_x > min_x )
+				if( p_x > x_min )
 				{
-					min_x = p_x;
+					x_min = p_x;
 				}
-				if( p_y < max_y )
+				if( p_y < y_max )
 				{
-					max_y = p_y + current_player.sprite_height;
+					y_max = p_y + current_player.sprite_height;
 				}
-				if( p_y > min_y )
+				if( p_y > y_min )
 				{
-					min_y = p_y;
+					y_min = p_y;
 				}
 			}
 		}
 	}
 }
 
-// Set view
-var x_ratio = window_get_width() / room_width;
-var y_ratio = window_get_height() / room_height;
-
-room_set_view_enabled(rJetPackBrawl, true);
-room_set_viewport(rJetPackBrawl, 0, 1, min_x, min_y, max_x - min_x, max_y - min_y );
-
+// Set camera
+camera_set_view_pos(view_camera[0], x_min - 256, y_min - 256);
+camera_set_view_size(view_camera[0], x_max-x_min + 512,  y_max-y_min + 512);
+camera_set_view_speed(view_camera[0], 4, 4);

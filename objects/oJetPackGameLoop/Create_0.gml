@@ -18,6 +18,21 @@ player_y[5] = 832 + (32 * 5);
 player_y[6] = 832 + (32 * 6);
 player_y[7] = 832 + (32 * 7);
 
+//Enable the use of views
+view_enabled = true;
+
+//Make view 0 visible
+view_set_visible(0, true);
+
+//Set the port bounds of view 0 to 640x480
+view_set_wport(0, 640);
+view_set_hport(0, 480);
+
+// Create cam
+camera = camera_create_view(0, 0, 100, 100, 0, -1, -1, -1, 32, 32);
+view_set_camera(0, camera);
+
+// Players
 game_players = ds_map_create();
 
 // Set players x and y
