@@ -76,8 +76,15 @@ if(r_trigger_pressed && !instance_exists(active_ammo))
 	active_ammo = instance_create_layer(x + (sprite_width/2), y + (sprite_height/2), "instances", oJetPackBrawlAmmo);
 	active_ammo.player = self;
 	active_ammo.colour = colour;
-	active_ammo.dy = (-r_stick_y_val) * active_ammo.y_magnifier;
-	active_ammo.dx = (-r_stick_x_val) * active_ammo.x_magnifier;
+	
+	if( r_stick_x_val > 0.5 || r_stick_x_val < -0.5 || r_stick_y_val > 0.5 || r_stick_y_val < -0.5 )
+	{
+		last_shot_x_value = -r_stick_x_val;
+		last_shot_y_value = -r_stick_y_val;
+	}
+	
+	active_ammo.dx = last_shot_x_value * active_ammo.x_magnifier;
+	active_ammo.dy = last_shot_y_value * active_ammo.y_magnifier;
 }
 
 // The player is hit by a bullet

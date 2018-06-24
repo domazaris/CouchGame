@@ -33,4 +33,5 @@ sprite_index = sJetPack;
 
 // Weapons
 active_ammo = instance_create_layer(-1000, -1000, "instances", oJetPackBrawlAmmo);;
-
+last_shot_x_value = 0;
+last_shot_y_value = 0;
