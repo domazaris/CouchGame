@@ -4,8 +4,33 @@ var x_max = -1;
 var y_min = -1;
 var y_max = -1;
 
-// Iterate each controller and add active players
 var connected_controllers = gamepad_get_device_count();
+if( instance_number(oJetPackBrawlPlayer) <= 1)
+{
+	for( var c_id = 0; c_id < connected_controllers; c_id++ )
+	{
+		// Check gamepad is connected
+		if( gamepad_is_connected( c_id ) )
+		{
+			if( ds_map_exists(game_players, c_id) )
+			{
+				var candidate = game_players[? c_id];
+				if( candidate.player_health > 0 )
+				{
+					winning_colour = candidate.colour;
+				}
+				
+				var start_pressed = gamepad_button_check_pressed(c_id, gp_start);
+				if( start_pressed )
+				{
+					room_goto(rJetPackBrawlRegister);
+				}
+			}
+		}
+	}
+}
+
+// Iterate each controller and add active players
 for( var c_id = 0; c_id < connected_controllers; c_id++ )
 {
 	// Check gamepad is connected
@@ -63,7 +88,7 @@ if( x_max < 0 ) x_max = room_width;
 if( y_min < 0 ) y_min = 0;
 if( y_max < 0 ) y_max = room_height;
 
-show_debug_message(string(x_min) + " " + string(x_max));
+//show_debug_message(string(x_min) + " " + string(x_max));
 if( x_max - x_min < min_x_cam )
 {
 	var difference = (min_x_cam - (x_max - x_min)) / 2;

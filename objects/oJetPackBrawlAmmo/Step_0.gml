@@ -1,6 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-
 
 dy -= grav;
 if( dx > 0) dx -= drag;
@@ -23,6 +20,5 @@ if( place_meeting(x,y, oWall) )
 // Off Screen
 if( x > room_width || x < 0 || y > room_height || y < 0 )
 {
-	show_debug_message("destroying bullet");
 	instance_destroy(self);
 }

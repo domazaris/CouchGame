@@ -58,3 +58,5 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 		}
 	}
 }
+
+winning_colour = -1;

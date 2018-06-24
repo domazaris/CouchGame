@@ -30,7 +30,7 @@ hsp = l_stick_x_val * walksp;
 if( l_bumper && ! l_trigger )
 {
 	// Hovering
-	vsp = 0;
+	vsp = 0.05;
 	hsp *= 0.5;
 	effect_create_below(ef_smoke, bbox_left + random(sprite_width), bbox_bottom + random(sprite_height), choose(0.1, 0.5), merge_colour(c_red, c_yellow, random(1)));
 }
@@ -47,15 +47,7 @@ if( place_meeting(x + hsp, y, oWall) )
 {
 	while(!place_meeting(x + sign(hsp), y, oWall))
 	{
-		show_debug_message(string(x) + " " + string(hsp));
-		if( sign(hsp) < 0 )
-		{
-			x = x + sign(hsp);
-		}
-		else
-		{
-			x = x + sign(hsp);
-		}
+		x = x + sign(hsp);
 	}
 	hsp = 0;
 }
@@ -81,11 +73,11 @@ else
 // Shooty shooty
 if(r_trigger_pressed && !instance_exists(active_ammo))
 {
-	active_ammo = instance_create_layer(x, y, "instances", oJetPackBrawlAmmo);
+	active_ammo = instance_create_layer(x + (sprite_width/2), y, "instances", oJetPackBrawlAmmo);
 	active_ammo.player = self;
 	active_ammo.colour = colour;
-	active_ammo.dy = sign(r_stick_y_val) * active_ammo.magnifier;
-	active_ammo.dx = sign(r_stick_x_val)  * active_ammo.magnifier;
+	active_ammo.dy = (-r_stick_y_val) * active_ammo.magnifier;
+	active_ammo.dx = (-r_stick_x_val) * active_ammo.magnifier;
 }
 
 // Ouchy ouchy
