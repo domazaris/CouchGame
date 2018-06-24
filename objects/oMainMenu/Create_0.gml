@@ -1,6 +1,16 @@
 // Default to fullscreen
 window_set_fullscreen(true);
 
+if( audio_is_playing(sndBackgroundEpic) )
+{
+	audio_stop_sound(sndBackgroundEpic);
+}
+
+if( ! audio_is_playing(sndBackgroundPiano) )
+{
+	audio_play_sound(sndBackgroundPiano, 1, true);
+}
+
 // Create menu options
 block_size = 32;
 

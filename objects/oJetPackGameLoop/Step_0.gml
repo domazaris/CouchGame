@@ -7,6 +7,18 @@ var y_max = -1;
 var connected_controllers = gamepad_get_device_count();
 if( instance_number(oJetPackBrawlPlayer) <= 1)
 {
+	if( audio_is_playing(sndBackgroundEpic) )
+	{
+		audio_stop_sound(sndBackgroundEpic);
+	}
+
+	if( ! audio_is_playing(sndShandies) && ! win_music_played )
+	{
+		win_music_played = true;
+		audio_play_sound(sndShandies, 2, false);
+	}
+
+	
 	for( var c_id = 0; c_id < connected_controllers; c_id++ )
 	{
 		// Check gamepad is connected
@@ -114,7 +126,7 @@ else
 }
 
 // Set camera
-//camera_set_view_pos(view_camera[0], x_min, y_min);
-//show_debug_message(string(x_max - x_min));
-//camera_set_view_size(view_camera[0], x_max-x_min,  y_max-y_min);
-//camera_set_view_speed(view_camera[0], -1, -1);
+camera_set_view_pos(view_camera[0], x_min, y_min);
+show_debug_message(string(x_max - x_min));
+camera_set_view_size(view_camera[0], x_max-x_min,  y_max-y_min);
+camera_set_view_speed(view_camera[0], -1, -1);

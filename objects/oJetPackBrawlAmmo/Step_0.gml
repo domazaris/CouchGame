@@ -17,6 +17,15 @@ if( place_meeting(x,y, oWall) )
 	instance_destroy(self);
 }
 
+if( place_meeting(x,y, oBreakableWall) )
+{
+	effect_create_below(ef_explosion, bbox_left + random(sprite_width), bbox_bottom + random(sprite_height), choose(0.5, 1), merge_colour(c_red, c_yellow, random(1)));
+	audio_play_sound(sndBrickHit, 2, 0);
+	var wall = instance_place(x, y, oBreakableWall);
+	if( wall.block_health > 0 ) wall.block_health -= 1;
+	instance_destroy(self);
+}
+
 // Off Screen
 if( x > room_width || x < 0 || y > room_height || y < 0 )
 {

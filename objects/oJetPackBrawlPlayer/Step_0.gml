@@ -6,7 +6,7 @@ if(l_stick_x_val < 0.1 && l_stick_x_val > -0.1)
 }
 
 // Check jump
-if( place_meeting(x, y + 1, oWall) && a_pressed )
+if( ( place_meeting(x, y + 1, oWall) || place_meeting(x, y+1, oBreakableWall)) && a_pressed )
 {
 	vsp = -7;
 	effect_create_below(ef_smoke, bbox_left + random(sprite_width), bbox_bottom + random(sprite_height), choose(0, 1), merge_colour(c_red, c_yellow, random(1)));
@@ -43,9 +43,9 @@ else
 // Horizontal Collision
 var w_diff = sprite_get_width(sWall);
 var h_diff = sprite_get_height(sWall);
-if( place_meeting(x + hsp, y, oWall) )
+if( place_meeting(x + hsp, y, oWall) || place_meeting(x + hsp, y, oBreakableWall) )
 {
-	while(!place_meeting(x + sign(hsp), y, oWall))
+	while(!place_meeting(x + sign(hsp), y, oWall) && !place_meeting(x + sign(hsp), y, oBreakableWall))
 	{
 		x = x + sign(hsp);
 	}
@@ -57,9 +57,9 @@ else
 }
 
 // Vertical collision
-if( place_meeting(x, y + vsp, oWall) )
+if( place_meeting(x, y + vsp, oWall) || place_meeting(x, y + vsp, oBreakableWall) )
 {
-	while(!place_meeting(x, y + sign(vsp), oWall))
+	while(!place_meeting(x, y + sign(vsp), oWall) && !place_meeting(x, y + sign(vsp), oBreakableWall))
 	{
 		y = y + sign(vsp);
 	}
@@ -73,20 +73,21 @@ else
 // Shooty shooty
 if(r_trigger_pressed && !instance_exists(active_ammo))
 {
-	active_ammo = instance_create_layer(x + (sprite_width/2), y, "instances", oJetPackBrawlAmmo);
+	active_ammo = instance_create_layer(x + (sprite_width/2), y + (sprite_height/2), "instances", oJetPackBrawlAmmo);
 	active_ammo.player = self;
 	active_ammo.colour = colour;
-	active_ammo.dy = (-r_stick_y_val) * active_ammo.magnifier;
-	active_ammo.dx = (-r_stick_x_val) * active_ammo.magnifier;
+	active_ammo.dy = (-r_stick_y_val) * active_ammo.y_magnifier;
+	active_ammo.dx = (-r_stick_x_val) * active_ammo.x_magnifier;
 }
 
-// Ouchy ouchy
+// The player is hit by a bullet
 if( place_meeting(x,y, oJetPackBrawlAmmo) )
 {
 	// No self damage
 	var laser_ball = instance_place(x, y, oJetPackBrawlAmmo);
 	if( laser_ball.player != self )
 	{
+		audio_play_sound(sndAmmoHit, 2, 0);
 		vibrate_cooldown = 1;
 		effect_create_below(ef_explosion, bbox_left + random(sprite_width), bbox_bottom + random(sprite_height), choose(0.5, 1), merge_colour(c_red, c_yellow, random(1)));
 		// Check contact with laser balls
