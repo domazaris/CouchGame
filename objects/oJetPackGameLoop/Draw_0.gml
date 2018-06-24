@@ -1,6 +1,5 @@
 
 var active = instance_number(oJetPackBrawlPlayer);
-show_debug_message(string(active));
 if( active <= 1)
 {
 	var r_w = room_width;

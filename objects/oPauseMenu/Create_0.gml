@@ -15,3 +15,5 @@ last_selected = 0;
 
 // Deactive everything
 instance_deactivate_all(true);
+
+view_enabled = false;

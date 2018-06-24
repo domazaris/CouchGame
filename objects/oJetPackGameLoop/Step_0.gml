@@ -1,12 +1,16 @@
-
-var x_min = -1;
-var x_max = -1;
-var y_min = -1;
-var y_max = -1;
+// Cmaera counts
+x_total = 0;
+x_count = 0;
+y_total = 0;
+y_count = 0;
 
 var connected_controllers = gamepad_get_device_count();
-if( instance_number(oJetPackBrawlPlayer) <= 1)
+var game_over = instance_number(oJetPackBrawlPlayer) <= 1;
+if( game_over )
 {
+	camera_set_view_pos(view_camera[0], 0, 0);
+	camera_set_view_size(view_camera[0], room_width, room_height);
+	
 	if( audio_is_playing(sndBackgroundEpic) )
 	{
 		audio_stop_sound(sndBackgroundEpic);
@@ -84,49 +88,45 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 			// Set min/max players
 			if(instance_exists(current_player))
 			{
-				var p_x = current_player.x;
-				var p_y = current_player.y;
-				if( x_min < 0 || x_min < p_x ) x_max = p_x;
-				if( x_max < 0 || x_max + current_player.sprite_width > p_x ) x_min = p_x + current_player.sprite_width;
-				if( y_min < 0 || y_min < p_y ) y_max = p_y;
-				if( y_max < 0 || y_max + current_player.sprite_height > p_y ) y_min = p_y + current_player.sprite_height;
+				x_total += current_player.x; x_count += 1;
+				y_total += current_player.y; y_count += 1;
 			}
 		}
 	}
 }
 
-if( x_min < 0 ) x_min = 0;
-if( x_max < 0 ) x_max = room_width;
-if( y_min < 0 ) y_min = 0;
-if( y_max < 0 ) y_max = room_height;
+if( x_count > 0 && y_count > 0 && !game_over )
+{
+	var x_ave = (x_total / x_count);
+	var y_ave = (y_total / y_count);
 
-//show_debug_message(string(x_min) + " " + string(x_max));
-if( x_max - x_min < min_x_cam )
-{
-	var difference = (min_x_cam - (x_max - x_min)) / 2;
-	x_min -= difference;
-	x_max += difference;
-}
-else
-{
-	x_min -= 128;
-	x_max += 128;
-}
+	var x_cam = (x_ave - ( min_x_cam / 2));
+	var y_cam = (y_ave - ( min_y_cam / 2));
+	var x_size = min_x_cam;
+	var y_size = min_y_cam;
 
-if( y_max - y_min < min_y_cam )
-{
-	var difference = (min_y_cam - (y_max - y_min)) / 2;
-	y_min -= difference;
-	y_max += difference;
-}
-else
-{
-	y_min -= 72;
-	y_max += 72;
-}
+	var futhest_player = instance_furthest(x_ave, y_ave, oJetPackBrawlPlayer);
+	while( futhest_player.x > x_cam + x_size || futhest_player.y > y_cam + y_size || futhest_player.x < x_cam || futhest_player.y < y_cam )
+	{
+		// 16:9 ratio
+		var x_rat = 16 / 2;
+		var y_rat = 9 / 2;
+		x_cam -= x_rat/2; x_size += x_rat;
+		y_cam -= y_rat/2; y_size += y_rat;
+	}
 
-// Set camera
-camera_set_view_pos(view_camera[0], x_min, y_min);
-show_debug_message(string(x_max - x_min));
-camera_set_view_size(view_camera[0], x_max-x_min,  y_max-y_min);
-camera_set_view_speed(view_camera[0], -1, -1);
+	var mul = 50;
+	var x_buf = 16 * mul;
+	var y_buf = 9 * mul;
+	
+	x_cam -= x_buf/2;
+	y_cam -= y_buf/2;
+	x_size += x_buf;
+	y_size += y_buf;
+	
+
+	// Set camera
+	camera_set_view_pos(view_camera[0], x_cam, y_cam);
+	camera_set_view_size(view_camera[0], x_size, y_size );
+	//camera_set_view_speed(view_camera[0], -1, -1);
+}

@@ -31,25 +31,6 @@ player_y[5] = 832;
 player_y[6] = 832;
 player_y[7] = 832;
 
-//Enable the use of views
-// TODO
-view_enabled = false;
-
-////Make view 0 visible
-view_set_visible(0, true);
-
-// Min cam vals
-min_x_cam = 720;
-min_y_cam = 480;
-
-//Set the port bounds of view 0 to 640x480
-view_set_wport(0, min_x_cam);
-view_set_hport(0, min_y_cam);
-
-// Create cam
-camera = camera_create_view(0, 0, 100, 100, 0, -1, -1, -1, 32, 32);
-view_set_camera(0, camera);
-
 // Players
 game_players = ds_map_create();
 
@@ -74,3 +55,27 @@ for( var c_id = 0; c_id < connected_controllers; c_id++ )
 
 winning_colour = -1;
 win_music_played = false;
+
+// Camera
+x_total = 0;
+x_count = 0;
+y_total = 0;
+y_count = 0;
+
+//Enable the use of views
+view_enabled = true;
+
+////Make view 0 visible
+view_set_visible(0, true);
+
+// Min cam vals
+min_x_cam = 720;
+min_y_cam = 480;
+
+//Set the port bounds of view 0 to 640x480
+view_set_wport(0, min_x_cam);
+view_set_hport(0, min_y_cam);
+
+// Create cam
+camera = camera_create_view(0, 0, 100, 100, 0, -1, -1, -1, 32, 32);
+view_set_camera(0, camera);
